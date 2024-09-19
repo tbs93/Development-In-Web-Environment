@@ -1,5 +1,8 @@
 package Model;
 
+import Services.FileConstants;
+import Services.IDGenerator;
+
 public abstract class Employee {
 	
 	protected int ID;
@@ -7,21 +10,34 @@ public abstract class Employee {
 	protected String fullName;
 	protected String phoneNumber;
 	protected String accountNumber;
-	protected Option[] options;
+	protected Option[] options; //the options available to the employee
 	//TODO employeeRole
-	//TODO branch relation
+	protected Branch branch;
+	protected String password;
+	protected EmployeeType employeeType;
 	
 	public Employee() {
 		
 	}
 	
-	public Employee(int ID, int employeeNumber, String fullName, String phoneNumber, String accountNumber) {
+	public Employee(IDGenerator idGenerator, int employeeNumber,String password, String fullName, String phoneNumber, String accountNumber, Branch branch, EmployeeType employeeType) {
 		
-		this.ID = ID;
+		this.ID = IDGenerator.getNextID(FileConstants.EMPLOYEES_FILE_NAME);
 		this.employeeNumber = employeeNumber;
 		this.fullName = fullName;
 		this.phoneNumber = phoneNumber;
 		this.accountNumber = accountNumber;
+		this.branch = branch;
+		this.password = password;
+		this.employeeType = employeeType;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
 
 	public int getID() {
@@ -64,7 +80,24 @@ public abstract class Employee {
 		this.accountNumber = accountNumber;
 	}
 	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
+	public String getPassword() {
+		return password;
+	}
+	
+	 public EmployeeType getEmployeeType() {
+		return employeeType;
+	}
+
+	/*
+	 * public void setEmployeeType(EmployeeType employeeType) { this.employeeType =
+	 * employeeType; }
+	 */
+
+	public abstract void showDetails();
 	
 	
 }

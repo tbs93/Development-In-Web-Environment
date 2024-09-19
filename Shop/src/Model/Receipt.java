@@ -2,7 +2,8 @@ package Model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import Services.ReceiptIDGenerator;
+import Services.IDGenerator;
+import Services.FileConstants;
 
 public class Receipt {
 	
@@ -16,9 +17,9 @@ public class Receipt {
 	private LocalDateTime date;
 	
 
-	public Receipt(ReceiptIDGenerator idGenerator, Employee cashier, ArrayList<Product> products, double total, String payment, double paid, LocalDateTime date)
+	public Receipt(IDGenerator idGenerator, Employee cashier, ArrayList<Product> products, double total, String payment, double paid, LocalDateTime date)
 	{
-		this.ID = idGenerator.getNextReceiptID();
+		this.ID = IDGenerator.getNextID(FileConstants.RECEIPTS_FILE_NAME);
 		System.out.println("Generated Receipt ID: " + this.ID); // Debugging line
 		this.cashier = cashier;
 		this.products = products;
