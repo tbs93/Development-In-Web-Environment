@@ -1,0 +1,24 @@
+Employee ID: 1
+Employee Number: 101
+Password: admin123
+Full Name: John Doe
+Phone Number: 555-1234
+Account Number: null
+Branch ID: 1
+Branch Name: Main Branch
+Branch City: Some City
+Branch Address: 123 Main St
+Employee Type: CASHIER
+===================================
+Employee ID: 2
+Employee Number: 102
+Password: admin123
+Full Name: Tzvi Shalmiev
+Phone Number: 999-6789
+Account Number: 146146146
+Branch ID: 2
+Branch Name: Main Branch
+Branch City: Some City
+Branch Address: 123 Main St
+Employee Type: ADMIN
+===================================

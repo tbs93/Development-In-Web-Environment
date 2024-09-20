@@ -9,7 +9,8 @@ import Model.Branch;
 import Model.Employee;
 
 public class CreateEmployee {
-    private String fileName; 
+    private String fileName;
+    private boolean success; // Add a field to track success status
 
     public CreateEmployee(Employee employee) {
         this.fileName = FileConstants.EMPLOYEES_FILE_NAME;
@@ -17,9 +18,15 @@ public class CreateEmployee {
         // Validate employee details before writing
         if (isEmployeeValid(employee)) {
             writeEmployeeToFile(employee);
+            success = true; // Set success to true if the employee is written successfully
         } else {
             System.out.println("Employee creation failed: Duplicate details found.");
+            success = false; // Set success to false if validation fails
         }
+    }
+
+    public boolean isSuccessful() {
+        return success; // Return the success status
     }
 
     private boolean isEmployeeValid(Employee employee) {
@@ -47,7 +54,6 @@ public class CreateEmployee {
         }
         return true; // No duplicates found, employee is valid
     }
-
 
     private void writeEmployeeToFile(Employee employee) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
