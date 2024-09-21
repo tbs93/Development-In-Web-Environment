@@ -1,28 +1,46 @@
 package Model;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import Services.FileConstants;
+import Services.IDGenerator;
+
 public abstract class Employee {
-	
+
 	protected int ID;
 	protected int employeeNumber;
 	protected String fullName;
 	protected String phoneNumber;
 	protected String accountNumber;
-	protected Option[] options;
-	//TODO employeeRole
-	//TODO branch relation
-	
+	protected Set<Option> availableOptions;
+	protected Branch branch;
+	protected String password;
+	protected EmployeeType employeeType;
+
 	public Employee() {
-		
+		this.availableOptions = new HashSet<>();
 	}
-	
-	public Employee(int ID, int employeeNumber, String fullName, String phoneNumber, String accountNumber) {
-		
-		this.ID = ID;
+
+	public Employee(IDGenerator idGenerator, int employeeNumber,String password, String fullName, String phoneNumber, String accountNumber, Branch branch, EmployeeType employeeType) {
+
+		this.ID = IDGenerator.getNextID(FileConstants.EMPLOYEES_FILE_NAME);
 		this.employeeNumber = employeeNumber;
 		this.fullName = fullName;
 		this.phoneNumber = phoneNumber;
 		this.accountNumber = accountNumber;
+		this.branch = branch;
+		this.password = password;
+		this.employeeType = employeeType;
+		this.availableOptions = new HashSet<>();
 	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public abstract void setBranch(Branch branch);
 
 	public int getID() {
 		return ID;
@@ -63,8 +81,35 @@ public abstract class Employee {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-	
-	
-	
-	
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public EmployeeType getEmployeeType() {
+		return employeeType;
+	}
+
+	public Set<Option> getAvailableOptions() {
+		return availableOptions;
+	}
+
+	public boolean canPerform(Option option) {
+		return availableOptions.contains(option);
+	}
+
+	public abstract void showDetails();
+
+	public abstract void scanProduct();
+	public abstract void printReceipt();
+	public abstract void addProductToInventory();
+	public abstract void checkInventory();
+	public abstract void addEmployee(Employee employee);
+	public abstract void removeEmployee(int employeeNumber);
+	public abstract void updateEmployeeInfo(Employee employee, Map<String, String> updates, Branch branch);
+
 }
