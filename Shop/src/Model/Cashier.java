@@ -1,6 +1,8 @@
 package Model;
 
 import Services.IDGenerator;
+
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -10,10 +12,13 @@ public class Cashier extends Employee {
     public Cashier(IDGenerator idGenerator, int employeeNumber, String password, String fullName, String phoneNumber, String accountNumber, Branch branch) {
         super(idGenerator, employeeNumber, password, fullName, phoneNumber, accountNumber, branch, EmployeeType.CASHIER);
         // Initialize available options for Cashier
-        availableOptions = new HashSet<>();
-        availableOptions.add(Option.SCAN_PRODUCT);
-        availableOptions.add(Option.PRINT_RECEIPT);
-        availableOptions.add(Option.CHECK_INVENTORY);
+		/*
+		 * availableOptions = EnumSet.noneOf(Option.class);
+		 * availableOptions.add(Option.SCAN_PRODUCT);
+		 * availableOptions.add(Option.PRINT_RECEIPT);
+		 * availableOptions.add(Option.CHECK_INVENTORY);
+		 */
+        availableOptions = EnumSet.allOf(Option.class);
     }
 
     @Override

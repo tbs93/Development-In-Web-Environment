@@ -5,28 +5,94 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
+
+import Model.Admin;
 import Model.Branch;
+import Model.Cashier;
 import Model.Employee;
+import Model.EmployeeType;
+import Model.SalesPerson;
 
 public class CreateEmployee {
     private String fileName;
-    private boolean success; // Add a field to track success status
 
-    public CreateEmployee(Employee employee) {
+    public CreateEmployee() {
         this.fileName = FileConstants.EMPLOYEES_FILE_NAME;
-
-        // Validate employee details before writing
-        if (isEmployeeValid(employee)) {
-            writeEmployeeToFile(employee);
-            success = true; // Set success to true if the employee is written successfully
-        } else {
-            System.out.println("Employee creation failed: Duplicate details found.");
-            success = false; // Set success to false if validation fails
-        }
     }
 
-    public boolean isSuccessful() {
-        return success; // Return the success status
+    public void addEmployeeFromInput() {
+    	 
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt for employee details
+        System.out.print("Employee Number: ");
+        String employeeNumber = scanner.nextLine();
+
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Full Name: ");
+        String fullName = scanner.nextLine();
+
+        System.out.print("Phone Number: ");
+        String phoneNumber = scanner.nextLine();
+
+        // Assuming Account Number can be null or a string
+        System.out.print("Account Number: ");
+        String accountNumber = scanner.nextLine();
+        if (accountNumber.isEmpty()) {
+            accountNumber = null; // Handle null as needed
+        }
+
+        System.out.print("Branch ID: ");
+        int branchID = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Branch Name: ");
+        String branchName = scanner.nextLine();
+
+        System.out.print("Branch City: ");
+        String branchCity = scanner.nextLine();
+
+        System.out.print("Branch Address: ");
+        String branchAddress = scanner.nextLine();
+
+        System.out.print("Employee Type (CASHIER, SALESPERSON, ADMIN): ");
+        String employeeTypeInput = scanner.nextLine();
+        EmployeeType employeeType = EmployeeType.valueOf(employeeTypeInput.toUpperCase()); // Assuming EmployeeType is an enum
+
+        // Create the Employee object
+        Branch branch = new Branch(branchID, branchName, branchCity, branchAddress,null ,null);
+        //Employee employee = new Employee(employeeNumber, password, fullName, phoneNumber, accountNumber, branch, employeeType);
+        // Create the specific Employee type based on user input
+        Employee employee;
+        IDGenerator idGenerator = null;
+        int empNumber = Integer.parseInt(employeeNumber);
+        switch (employeeType) {
+        	
+            case CASHIER:
+                employee = new Cashier(idGenerator,empNumber, password, fullName, phoneNumber, accountNumber, branch);
+                break;
+            case SALESPERSON:
+                employee = new SalesPerson(idGenerator,empNumber, password, fullName, phoneNumber, accountNumber, branch);
+                break;
+            case ADMIN:
+                employee = new Admin(idGenerator,empNumber, password, fullName, phoneNumber, accountNumber, branch);
+                break;
+            default:
+                System.out.println("Invalid employee type.");
+                scanner.close();
+                return; // Exit if the type is invalid
+        }
+        // Validate and create the employee in the file
+        if (isEmployeeValid(employee)) {
+            writeEmployeeToFile(employee);
+            System.out.println("Employee created successfully!");
+        } else {
+            System.out.println("Failed to create employee: Duplicate details found.");
+        }
+
+        scanner.close();
     }
 
     private boolean isEmployeeValid(Employee employee) {
@@ -48,7 +114,6 @@ public class CreateEmployee {
                 }
             }
         } catch (IOException e) {
-            // This is an issue related to file access, not validation logic
             System.out.println("An error occurred while reading the employee file: " + e.getMessage());
             return false; // Assume employee is not valid if file access fails
         }

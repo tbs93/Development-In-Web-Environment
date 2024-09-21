@@ -22,3 +22,15 @@ Branch City: Some City
 Branch Address: 123 Main St
 Employee Type: ADMIN
 ===================================
+Employee ID: 3
+Employee Number: 103
+Password: admin123
+Full Name: Valentine K
+Phone Number: 999-565
+Account Number: 125125125
+Branch ID: 3
+Branch Name: Bat Yam
+Branch City: Bat Yam
+Branch Address: Bat Yam
+Employee Type: ADMIN
+===================================

@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -9,7 +10,8 @@ public class SalesPerson extends Employee{
 
 	public SalesPerson(IDGenerator idGenerator, int employeeNumber,String password, String fullName, String phoneNumber, String accountNumber, Branch branch) {
 	        super(idGenerator, employeeNumber,password, fullName, phoneNumber, accountNumber, branch,EmployeeType.SALESPERSON);
-	        availableOptions = new HashSet<>();
+	        //availableOptions = new HashSet<>();
+	        availableOptions = EnumSet.noneOf(Option.class);
 	        availableOptions.add(Option.SCAN_PRODUCT);
 	        availableOptions.add(Option.PRINT_RECEIPT);
 	        availableOptions.add(Option.ADD_PRODUCT_TO_INVENTORY);

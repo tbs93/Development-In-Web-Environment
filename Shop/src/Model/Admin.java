@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Map;
 import Services.CreateEmployee;
@@ -13,7 +14,8 @@ public class Admin extends Employee {
 	public Admin(IDGenerator idGenerator, int employeeNumber,String password,
  String fullName, String phoneNumber, String accountNumber, Branch branch) {
 	        super(idGenerator, employeeNumber,password, fullName, phoneNumber, accountNumber, branch,EmployeeType.ADMIN);
-	        availableOptions = new HashSet<>();
+	        //availableOptions = new LinkedHashSet<>();
+	        availableOptions = EnumSet.noneOf(Option.class);
 	        availableOptions.add(Option.SCAN_PRODUCT);
 	        availableOptions.add(Option.PRINT_RECEIPT);
 	        availableOptions.add(Option.ADD_PRODUCT_TO_INVENTORY);
@@ -60,13 +62,9 @@ public class Admin extends Employee {
 
     @Override
     public void addEmployee(Employee employee) {
-    	CreateEmployee createEmployee = new CreateEmployee(employee);
-    	// Check if employee creation was successful (assuming you have a method for that)
-        if (createEmployee.isSuccessful()) {
-            System.out.println("Admin successfully added an employee.");
-        } else {
-            System.out.println("Failed to add employee. Check for duplicates or errors.");
-        }
+    	CreateEmployee createEmployeeService = new CreateEmployee();
+        createEmployeeService.addEmployeeFromInput();
+    	
     }
 
     @Override
